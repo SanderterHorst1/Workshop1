@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
     {
         // get the starting point and direction of the raycast
         Vector3 barrelPosition = transform.GetChild(2).position;
-        Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
+        Vector3 forward = transform.TransformDirection(Vector3.forward) * 1000;
 
         // setup Ray
         RaycastHit hit;
@@ -58,17 +58,13 @@ public class PlayerController : MonoBehaviour
         // cast the ray
         if (Physics.Raycast(barrelPosition, forward, out hit, forward.magnitude))
         {
+            
             // check if the ray has hit a paintable object
             if (hit.collider.gameObject.CompareTag("Paintable"))
             {
-                // loop over all child gameobjects and paint them
-                foreach(Transform child in hit.transform.parent)
-                {
-                    // Get the Renderer component from the target
-                    var targetRenderer = child.transform.gameObject.GetComponent<Renderer>();
-                    // Call SetColor using the shader property name "_Color" and setting the color to red
-                    targetRenderer.material.color = Color.red;
-                }
+                Debug.Log(hit.transform.gameObject);
+                Destroy(hit.transform.gameObject);
+
             }
         }
     }
